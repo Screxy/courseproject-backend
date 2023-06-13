@@ -3,7 +3,6 @@
 {% block title %}{{article.article_title}}{% endblock %}
 
 {% block content %}
-
     <h2>{{article.article_title}}</h2>
     
     <p>{{article.article_text}}</p>
@@ -18,9 +17,11 @@
                 <strong> {{c.author_name}} </strong>
                 <p> {{c.comment_text}} </p>
             </p>
-        {% endfor%}
+        {% endfor %}
     {% else %}
-    Комментарии не найдены
+    <h1> 
+        Комментарии не найдены
+    </h1>
     {% endif %}
     <hr>
 
