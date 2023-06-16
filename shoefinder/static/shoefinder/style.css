@@ -1,0 +1,29 @@
+li a {
+  color: wheat;
+  font-size: 3.2rem;
+}
+
+.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+html{
+    font-size: 62.5%;
+    color: #fff;
+}
+
+h1{
+    font-size: 4rem;
+}
+p{
+    font-size: 2rem;
+}
+
+ul {
+    font-size: 4rem;
+    color: #fff;
+}
+body{
+    background-image: url(images/mospoly.png);
+}

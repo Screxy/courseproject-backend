@@ -1,0 +1,19 @@
+{% extends 'shoefinder/index.html' %}
+
+{% block title %}Модели кроссовок{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+
+    {% if models_name %}
+    <ul>Все модели кроссовок
+        {% for model in models_name %}
+        <li><a href="{% url 'shoefinder:detail'  model.id  %}">{{model.name}}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p> Кроссовки не найдены =/</p>
+    {% endif %}
+</div>
+
+{% endblock %}
