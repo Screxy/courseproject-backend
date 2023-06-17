@@ -1,11 +1,20 @@
 li a {
   color: wheat;
   font-size: 3.2rem;
+  transition: color .3s ease;
+}
+a:hover{
+    color:aqua;
 }
 
 .wrapper {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.header__wrapper{
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 html{

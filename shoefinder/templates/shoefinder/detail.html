@@ -6,6 +6,11 @@
 <div class="wrapper">
     <h1>Название: {{model_name}}</h1>
     <p>Бренд: {{model_name.brand}}</p>
+    <ul>
+        {% for model_link in links %}
+        <li><a href="{{model_link.url}}">{{model_link.store_name}}</a></li>
+        {% endfor %}
+    </ul>
 </div>
 
 

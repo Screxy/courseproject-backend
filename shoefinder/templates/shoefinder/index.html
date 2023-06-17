@@ -10,6 +10,13 @@
 
 </head>
 <body>
-    {% block content %}{% endblock %}
+    <header class="header">
+        <div class="header__wrapper">
+            <img src="{% static 'shoefinder/images/mospolytech_logo_white.png' %}" alt="our logotype" class="header__logo">
+        </div>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
 </body>
 </html>
