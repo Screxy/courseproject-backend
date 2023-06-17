@@ -1,9 +1,8 @@
-
 html {
   font-size: 62.5%;
   color: #fff;
-      scroll-behavior: smooth;
-    height: 100%;
+  scroll-behavior: smooth;
+  height: 100%;
 }
 body {
   background-image: url(images/mospoly.png);
@@ -17,7 +16,7 @@ body {
 main {
   flex: 1 0 auto;
 }
-li a {
+a {
   color: wheat;
   font-size: 3.2rem;
   transition: color 0.3s ease;
@@ -36,6 +35,8 @@ a:hover {
 .header__wrapper {
   max-width: 1200px;
   margin: 0 auto;
+    display: flex;
+  align-items: center;
 }
 
 h1 {
