@@ -20,7 +20,7 @@ def detail(request, article_id):
     except:
         raise Http404("Статья не найдена")
 
-    latest_comments_list = a.comment_set.order_by('-id')[:10]
+    latest_comments_list = a.comment_set.order_by('id')[:10]
 
     return render(request, 'articles/detail.html', {'article': a, 'latest_comments_list': latest_comments_list})
 
