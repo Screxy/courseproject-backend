@@ -60,11 +60,11 @@ class Styles(models.Model):
 
 
 class ShoeStyles(models.Model):
-    shoe = models.ForeignKey(ShoeModels, on_delete=models.CASCADE)
-    style = models.ForeignKey(Styles, on_delete=models.CASCADE)
+    shoe = models.ManyToManyField(ShoeModels)
+    style = models.ManyToManyField(Styles)
 
     def __str__(self):
-        return f"{self.shoe} - {self.style}"
+        return f"{', '.join(str(name) for name in self.style.all())} - {', '.join(str(shoe) for shoe in self.shoe.all())}"
 
     class Meta:
         verbose_name = 'Стиль кроссовок'

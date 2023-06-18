@@ -9,7 +9,8 @@
     <p>Где купить:</p>
     <ul>
         {% for model_link in links %}
-        <li><a href="{{model_link.url}}" target="_blank">{{model_link.store_name}}</a></li>
+        <li><a href="{{model_link.url}}" target="_blank">{{model_link.store_name}}</a>
+        <p>Цена: {{model_link.price}}</p></li>
         {% endfor %}
     </ul>
 </div>
