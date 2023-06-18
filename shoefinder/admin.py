@@ -8,11 +8,6 @@ class ShoeColorsInline(admin.StackedInline):
     extra = 1
 
 
-class ShoeStylesInline(admin.TabularInline):
-    model = ShoeStyles
-    extra = 1
-
-
 class ShoeModelsAdmin(admin.ModelAdmin):
     list_display = ["name", "brand"]
     fieldsets = [
@@ -42,6 +37,7 @@ class ShoeStylesAdmin(admin.ModelAdmin):
     list_display_links = ['display_styles', 'display_shoes']
     filter_horizontal = ['shoe', 'style']
     list_filter = ['shoe', 'style']
+
     def display_styles(self, obj):
         return ", ".join([str(style) for style in obj.style.all()])
 
@@ -56,6 +52,7 @@ class ShoeColorAdmin(admin.ModelAdmin):
     list_display = ['color', 'shoe']
     list_filter = ['color']
     search_fields = ["shoe"]
+    raw_id_fields = ['shoe', ]
 
 
 admin.site.register(Brand)
