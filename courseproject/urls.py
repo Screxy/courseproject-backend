@@ -21,5 +21,6 @@ urlpatterns = [
     path('articles/', include('articles.urls')),
     path('shoefinder/', include('shoefinder.urls')),
     path('admin/', admin.site.urls),
-    path('',include('shoefinder.urls'))
+    path('',include('shoefinder.urls')),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]

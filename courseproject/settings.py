@@ -21,6 +21,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-*dv_mtn1agt75&uc5d=+&$meq-it*%0f=ebvpls9w4gts^7aat'
 
+INTERNAL_IPS = [
+    "127.0.0.1"
+]
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -37,9 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
