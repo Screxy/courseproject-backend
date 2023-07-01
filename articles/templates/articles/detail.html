@@ -15,10 +15,12 @@
     {% if latest_comments_list %}
     <h2> Комментарии </h2>
     <ul>
-        {% for c in latest_comments_list %}
+        {% for comment in latest_comments_list %}
         <li>
-            <strong> {{c.author_name}} </strong>
-            <p> {{c.comment_text}} </p>
+            <strong> {{comment.author_name}} </strong>
+            <p> {{comment.comment_text}} </p>
+            <a href="{% url 'articles:detail_comment' article.id comment.id%}">Редактировать</a>
+            <a href="{% url 'articles:delete_comment' article.id comment.id%}">Удалить</a>
         </li>
         {% endfor %}
     </ul>

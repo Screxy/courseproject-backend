@@ -35,3 +35,39 @@ def leave_comment(request, article_id):
     a.comment_set.create(author_name=request.POST['username'], comment_text=request.POST['comment'])
 
     return HttpResponseRedirect(reverse('articles:detail', args=(a.id,)))
+
+
+def delete_comment(request, article_id, comment_id):
+    try:
+        article = Article.objects.get(id=article_id)
+        comment = Comment.objects.get(id=comment_id)
+
+    except:
+        raise Http404("Комментарий не найден")
+
+    comment.delete()
+
+    return HttpResponseRedirect(reverse('articles:detail', args=(article.id,)))
+
+
+def detail_comment(request, article_id, comment_id):
+    try:
+        comment = Comment.objects.get(id=comment_id)
+        article = Article.objects.get(id=article_id)
+
+    except:
+        raise Http404("comment не найден")
+
+    return render(request, 'articles/detail_comment.html', {'comment': comment, 'article': article})
+
+
+def edit_comment(request, article_id, comment_id):
+    try:
+        article = Article.objects.get(id=article_id)
+        comment = Comment.objects.get(id=comment_id)
+
+    except:
+        raise Http404("Комментарий к статье не найден")
+    comment.comment_text = request.POST['comment']
+    comment.save()
+    return HttpResponseRedirect(reverse('articles:detail_comment', args=(article.id, comment.id,)))
