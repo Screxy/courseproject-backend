@@ -1,0 +1,40 @@
+{% extends 'shoefinder/index.html' %}
+
+{% block title %}Подобрать кроссовки{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <form action="{% url 'shoefinder:find' %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h3>Выберите бренд</h3></legend>
+            {% for brand in brands %}
+            <label>
+                {{brand.name}}
+                <input type="checkbox" name="choiceBrands" value="{{brand.name}}">
+            </label>
+            {% endfor %}
+        </fieldset>
+        <fieldset>
+            <legend><h3>Выберите цвет</h3></legend>
+            {% for color in colors %}
+            <label>
+                {{color.name}}
+                <input type="checkbox" name="choiceColors" value="{{color.name}}">
+            </label>
+            {% endfor %}
+        </fieldset>
+        <fieldset>
+            <legend><h3>Выберите стиль</h3></legend>
+            {% for style in styles %}
+            <label>
+                {{style.name}}
+                <input type="checkbox" name="choiceStyles" value="{{style.name}}">
+            </label>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Подобрать">
+    </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'shoefinder/index.html' %}
+
+{% block title %}Подходящие кроссовки{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <ul>Все выбранные бренды:
+        {% for brand in brands %}
+        <li>{{brand}}</li>
+        {% endfor %}
+    </ul>
+    <ul>Все выбранные цвета:
+        {% for color in colors %}
+        <li>{{color}}</li>
+        {% endfor %}
+    </ul>
+    <ul>Все выбранные стили:
+        {% for style in styles %}
+        <li>{{style}}</li>
+        {% endfor %}
+    </ul>
+    <ul>Подходящие кроссовки:
+        {% for model in models %}
+        <li><a href="{% url 'shoefinder:detail'  model.id  %}">{{model.name}}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+{% endblock %}

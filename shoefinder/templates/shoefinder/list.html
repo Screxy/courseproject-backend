@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="wrapper">
-
+    <a href="{% url 'shoefinder:polls'%}">Подобрать кроссовки</a>
     {% if models_name %}
     <ul>Все модели кроссовок
         {% for model in models_name %}
