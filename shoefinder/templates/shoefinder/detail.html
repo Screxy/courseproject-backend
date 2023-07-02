@@ -1,4 +1,5 @@
 {% extends 'shoefinder/index.html' %}
+{% load static %}
 
 {% block title %}{{model_name}}{% endblock %}
 
@@ -6,6 +7,7 @@
 <div class="wrapper">
     <h1>Название: {{model_name}}</h1>
     <p>Бренд: {{model_name.brand}}</p>
+    <img src="{% static 'shoefinder/images/' %}{{model_name.id}}.jpg" width="300">
     <p>Где купить:</p>
     <ul>
         {% for model_link in links %}

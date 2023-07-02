@@ -19,6 +19,9 @@
         <li>
             <strong> {{comment.author_name}} </strong>
             <p> {{comment.comment_text}} </p>
+            {% if comment.image %}
+                <img src="{{ comment.image.url }}" alt="Картинка комментария" width="300">
+            {% endif %}
             <a href="{% url 'articles:detail_comment' article.id comment.id%}">Редактировать</a>
             <a href="{% url 'articles:delete_comment' article.id comment.id%}">Удалить</a>
         </li>
@@ -30,14 +33,13 @@
     </p>
     {% endif %}
 
-    <form action="{% url 'articles:leave_comment' article.id%}" method="POST">
+    <form action="{% url 'articles:leave_comment' article.id%}" method="POST" enctype="multipart/form-data">
 
         {% csrf_token %}
 
         <input type="text" required placeholder="Ваше имя" name="username">
-        <textarea name="comment" cols="30" rows="10" required placeholder="Ваш комментарий">
-
-         </textarea>
+        <textarea name="comment" cols="30" rows="10" required placeholder="Ваш комментарий"></textarea>
+        <input type="file" name="image" accept="image/*">
         <button type="submit">Оставить комментарий</button>
 
     </form>

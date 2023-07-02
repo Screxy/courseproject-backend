@@ -24,6 +24,7 @@ class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     author_name = models.CharField('Имя автора', max_length=50)
     comment_text = models.CharField('Текст комментария', max_length=200)
+    image = models.ImageField('Изображение', upload_to='comment_images/', blank=True, null=True)
 
     def __str__(self):
         return self.author_name

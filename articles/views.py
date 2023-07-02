@@ -6,6 +6,8 @@ from django.urls import reverse
 
 from .models import Article, Comment
 
+from django.core.files import File
+
 
 def index(request):
     latest_articles_list = Article.objects.order_by('-pub_date')[:5]
@@ -32,7 +34,10 @@ def leave_comment(request, article_id):
     except:
         raise Http404("Статья не найдена")
 
-    a.comment_set.create(author_name=request.POST['username'], comment_text=request.POST['comment'])
+    comment = a.comment_set.create(author_name=request.POST['username'], comment_text=request.POST['comment'])
+    if 'image' in request.FILES:
+        comment.image = request.FILES['image']
+        comment.save()
 
     return HttpResponseRedirect(reverse('articles:detail', args=(a.id,)))
 

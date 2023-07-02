@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from django.db.models import Q
 from .models import ShoeModels, PurchaseLinks, Brand, Colors, Styles
+from .utils import find_matching_shoes
 
 
 def index(request):
@@ -34,18 +34,7 @@ def find(request):
     selected_colors = request.POST.getlist('choiceColors')
     selected_styles = request.POST.getlist('choiceStyles')
 
-    query = Q()
-
-    for brand in selected_brands:
-        query |= Q(brand__name=brand)
-
-    for color in selected_colors:
-        query &= Q(shoecolors__color__name=color)
-
-    for style in selected_styles:
-        query &= Q(shoestyles__style__name=style)
-
-    shoe_models = ShoeModels.objects.filter(query).distinct()
+    shoe_models = find_matching_shoes(selected_brands, selected_colors, selected_styles)
 
     context = {
         'brands': selected_brands,
