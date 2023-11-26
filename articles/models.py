@@ -1,6 +1,6 @@
 import datetime
 from django.db import models
-
+from simple_history.models import HistoricalRecords
 from django.utils import timezone
 
 
@@ -25,6 +25,7 @@ class Comment(models.Model):
     author_name = models.CharField('Имя автора', max_length=50)
     comment_text = models.CharField('Текст комментария', max_length=200)
     image = models.ImageField('Изображение', upload_to='comment_images/', blank=True, null=True)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.author_name
