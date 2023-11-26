@@ -85,6 +85,7 @@ class PurchaseLinks(models.Model):
         ordering="price",
         description="Бюджетный вариант?",
     )
+    
     def inexpensive(self):
         return self.price < 20000
 

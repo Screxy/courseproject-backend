@@ -1,5 +1,5 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8"/>
@@ -18,7 +18,7 @@
                     class="header__logo"
             />
         </a>
-                <a href="{% url 'shoefinder:index' %}"> К поиску!</a>
+        <a href="{% url 'shoefinder:index' %}"> К поиску!</a>
     </div>
 </header>
 <main>{% block content %}{% endblock %}</main>

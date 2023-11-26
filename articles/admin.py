@@ -10,12 +10,12 @@ class ArticleAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ['article', 'author_name']
+    list_display = ['article', 'author_name', 'image']
     list_filter = ['article']
     search_fields = ["author_name"]
     fieldsets = [
         ("Статья", {"fields": ["article"]}),
-        ("Пользователь", {"fields": ["author_name", 'comment_text']}),
+        ("Пользователь", {"fields": ["author_name", 'comment_text', 'image']}),
     ]
 
 

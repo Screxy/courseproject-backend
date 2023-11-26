@@ -70,9 +70,12 @@ def edit_comment(request, article_id, comment_id):
     try:
         article = Article.objects.get(id=article_id)
         comment = Comment.objects.get(id=comment_id)
-
     except:
         raise Http404("Комментарий к статье не найден")
+    if 'image' in request.FILES:
+        comment.image = request.FILES['image']
+        print('asdasdasdasd')
+        comment.save()
     comment.comment_text = request.POST['comment']
     comment.save()
     return HttpResponseRedirect(reverse('articles:detail_comment', args=(article.id, comment.id,)))
