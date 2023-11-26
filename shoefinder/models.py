@@ -1,9 +1,11 @@
 from django.contrib import admin
 from django.db import models
+from simple_history.models import HistoricalRecords
 
 
 class Brand(models.Model):
     name = models.CharField(max_length=255)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name
@@ -15,6 +17,7 @@ class Brand(models.Model):
 
 class Colors(models.Model):
     name = models.CharField(max_length=255)
+    history = HistoricalRecords()
 
     def __str__(self):
         return self.name
