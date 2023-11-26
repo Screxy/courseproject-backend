@@ -13,18 +13,6 @@ class Brand(models.Model):
         verbose_name_plural = 'Бренды'
 
 
-class ShoeModels(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Модель обуви'
-        verbose_name_plural = 'Модели обуви'
-
-
 class Colors(models.Model):
     name = models.CharField(max_length=255)
 
@@ -34,6 +22,31 @@ class Colors(models.Model):
     class Meta:
         verbose_name = 'Цвет'
         verbose_name_plural = 'Цвета'
+
+
+class Styles(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Стиль'
+        verbose_name_plural = 'Стили'
+
+
+class ShoeModels(models.Model):
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    color = models.ManyToManyField(Colors)
+    style = models.ManyToManyField(Styles)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Модель обуви'
+        verbose_name_plural = 'Модели обуви'
 
 
 class ShoeColors(models.Model):
@@ -46,17 +59,6 @@ class ShoeColors(models.Model):
 
     def __str__(self):
         return f"{self.shoe} - {self.color}"
-
-
-class Styles(models.Model):
-    name = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        verbose_name = 'Стиль'
-        verbose_name_plural = 'Стили'
 
 
 class ShoeStyles(models.Model):
@@ -85,7 +87,6 @@ class PurchaseLinks(models.Model):
         ordering="price",
         description="Бюджетный вариант?",
     )
-    
     def inexpensive(self):
         return self.price < 20000
 

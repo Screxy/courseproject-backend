@@ -10,9 +10,7 @@ class ShoeColorsInline(admin.StackedInline):
 
 class ShoeModelsAdmin(admin.ModelAdmin):
     list_display = ["name", "brand"]
-    fieldsets = [
-        (None, {"fields": ["name", "brand"]}),
-    ]
+    filter_horizontal = ["color", "style"]
     inlines = [ShoeColorsInline]
 
 
