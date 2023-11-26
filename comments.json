@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "article_id": 1,
+    "author_name": "Kirill",
+    "comment_text": "Kaif",
+    "image": null
+  },
+  {
+    "id": 2,
+    "article_id": 2,
+    "author_name": "Clown",
+    "comment_text": "asdasdasdasdasd",
+    "image": null
+  },
+  {
+    "id": 3,
+    "article_id": 1,
+    "author_name": "\u0410\u043b\u0435\u0448\u0430",
+    "comment_text": "\u0412\u0430\u0443 \u043a\u0440\u0443\u0442\u043e    ",
+    "image": null
+  },
+  {
+    "id": 4,
+    "article_id": 1,
+    "author_name": "\u0410\u043b\u0435\u0448\u0430",
+    "comment_text": "\u0412\u0430\u0443 \u043a\u0440\u0443\u0442\u043e    ",
+    "image": null
+  },
+  {
+    "id": 6,
+    "article_id": 2,
+    "author_name": "asdasd",
+    "comment_text": "\r\n         asdasd",
+    "image": null
+  },
+  {
+    "id": 7,
+    "article_id": 1,
+    "author_name": "\u0414\u0438\u043c\u043e\u043d\u0447\u0438\u043a",
+    "comment_text": "\r\n         \u0447\u0442\u043e \u043f\u0440\u0430\u0432\u0434\u0430 \u0442\u043e \u043f\u0440\u0430\u0432\u0434\u0430",
+    "image": null
+  },
+  {
+    "id": 8,
+    "article_id": 2,
+    "author_name": "chel ti",
+    "comment_text": "chel ti",
+    "image": null
+  },
+  {
+    "id": 9,
+    "article_id": 2,
+    "author_name": "Max100",
+    "comment_text": "100% \u043f\u0440\u0430\u0432\u0434\u0430\r\n         ",
+    "image": null
+  },
+  {
+    "id": 10,
+    "article_id": 2,
+    "author_name": "asda",
+    "comment_text": "\r\n         sdasdasd",
+    "image": null
+  },
+  {
+    "id": 11,
+    "article_id": 2,
+    "author_name": "\u0444\u044b\u0432\u0444\u044b\u0432\u0444\u044b\u0432",
+    "comment_text": "\r\n         \u0444\u044b\u0432\u0444\u044b\u0432\u0444\u044b\u0432",
+    "image": null
+  },
+  {
+    "id": 15,
+    "article_id": 2,
+    "author_name": "\u043d\u043e\u0432\u044b\u0439 \u043a\u043e\u043c\u043c\u0435\u043d\u0442\u0430\u0440\u0438\u0439",
+    "comment_text": "\u041a\u0410\u041a \u0416\u0415 \u041b\u0415\u0413\u041a\u041e \u0411\u0420\u0410\u0422\r\n",
+    "image": null
+  },
+  {
+    "id": 16,
+    "article_id": 1,
+    "author_name": "\u041a\u041e\u041c\u041c\u0415\u041d\u0422\u0410\u0420\u0418\u0419",
+    "comment_text": "\u0421 \u041a\u0410\u0420\u0422\u0418\u041d\u041a\u041e\u0419",
+    "image": "comment_images/chrome_3efLEbhsZT.png"
+  },
+  {
+    "id": 18,
+    "article_id": 2,
+    "author_name": "asdas",
+    "comment_text": "\r\n         asdasd",
+    "image": "comment_images/chrome_3efLEbhsZT_L2yUJ4P.png"
+  },
+  {
+    "id": 19,
+    "article_id": 2,
+    "author_name": "asd",
+    "comment_text": "\r\n         asdasdasd",
+    "image": "comment_images/chrome_nId6NLEipQ.png"
+  },
+  {
+    "id": 20,
+    "article_id": 2,
+    "author_name": "AS",
+    "comment_text": "\u0442\u0435\u0435\u0442\u0435\u0442\u0441\u0442",
+    "image": "comment_images/chrome_3efLEbhsZT_MBLLNVK.png"
+  }
+]
