@@ -1,5 +1,10 @@
+from django.http import Http404
 from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
+
 from .models import ShoeModels, PurchaseLinks, Brand, Colors, Styles
+from .pagination import ShoeModelPagination
+from .serializers import BrandSerializer, ShoeModelsSerializer, PurchaseLinksSerializer
 from .utils import find_matching_shoes
 
 
@@ -20,9 +25,9 @@ def detail(request, question_id):
 
 def polls(request):
     try:
-        brands = Brand.objects.all();
-        styles = Styles.objects.all();
-        colors = Colors.objects.all();
+        brands = Brand.objects.all()
+        styles = Styles.objects.all()
+        colors = Colors.objects.all()
         context = {'brands': brands, 'styles': styles, 'colors': colors}
     except:
         raise Http404("Ошибка")
@@ -44,4 +49,19 @@ def find(request):
     }
 
     return render(request, "shoefinder/findedShoes.html", context)
-#
+
+
+class BrandViewSet(ModelViewSet):
+    serializer_class = BrandSerializer
+    queryset = Brand.objects.all()
+
+
+class ShoeModelsViewSet(ModelViewSet):
+    serializer_class = ShoeModelsSerializer
+    queryset = ShoeModels.objects.all()
+    pagination_class = ShoeModelPagination
+
+
+class PurchaseLinksViewSet(ModelViewSet):
+    serializer_class = PurchaseLinksSerializer
+    queryset = PurchaseLinks.objects.all()
