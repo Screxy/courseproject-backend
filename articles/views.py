@@ -1,12 +1,11 @@
 from django.http import Http404, HttpResponseRedirect
-
 from django.shortcuts import render
-
 from django.urls import reverse
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Article, Comment
 
-from django.core.files import File
+from .serializers import ArticleSerializer, CommentSerializer
 
 
 def index(request):
@@ -74,8 +73,17 @@ def edit_comment(request, article_id, comment_id):
         raise Http404("Комментарий к статье не найден")
     if 'image' in request.FILES:
         comment.image = request.FILES['image']
-        print('asdasdasdasd')
         comment.save()
     comment.comment_text = request.POST['comment']
     comment.save()
     return HttpResponseRedirect(reverse('articles:detail_comment', args=(article.id, comment.id,)))
+
+
+class ArticlesViewSet(ModelViewSet):
+    serializer_class = ArticleSerializer
+    queryset = Article.objects.all()
+
+
+class CommentsViewSet(ModelViewSet):
+    serializer_class = CommentSerializer
+    queryset = Comment.objects.all()

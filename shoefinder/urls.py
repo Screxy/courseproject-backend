@@ -12,10 +12,8 @@ router.register("model", ShoeModelsViewSet)
 router.register("link", PurchaseLinksViewSet)
 
 urlpatterns = [
-    path("", views.index, name="index"),
-    path("<int:question_id>/", views.detail, name="detail"),
-    path("polls", views.polls, name="polls"),
-    path("find", views.find, name="find"),
-]
-
-urlpatterns.extend(router.urls)
+                  # path("", views.index, name="index"),
+                  # path("<int:question_id>/", views.detail, name="detail"),
+                  # path("polls", views.polls, name="polls"),
+                  # path("find", views.find, name="find"),
+              ] + router.urls

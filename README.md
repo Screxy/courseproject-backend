@@ -1,8 +1,8 @@
 ### Create virtual environment
 
-```bash
-$ python -m venv venv #(for Linux: python3 -m venv venv)
-$ .\venv\Scripts\activate #(for Linux: source ./venv/bin/activate)
+```shell
+python -m venv venv #(for Linux: $ python3 -m venv venv)
+.\venv\Scripts\activate #(for Linux: $ source ./venv/bin/activate)
 ```
 
 ### Install dependencies
