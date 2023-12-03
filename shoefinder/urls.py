@@ -7,9 +7,9 @@ from .views import BrandViewSet, PurchaseLinksViewSet, ShoeModelsViewSet
 app_name = 'shoefinder'
 
 router = DefaultRouter()
-router.register("brand", BrandViewSet)
-router.register("model", ShoeModelsViewSet)
-router.register("link", PurchaseLinksViewSet)
+router.register("brands", BrandViewSet)
+router.register("models", ShoeModelsViewSet)
+router.register("links", PurchaseLinksViewSet)
 
 urlpatterns = [
                   # path("", views.index, name="index"),

@@ -1,4 +1,6 @@
 import datetime
+
+from django.contrib.auth.models import User
 from django.db import models
 from simple_history.models import HistoricalRecords
 from django.utils import timezone
@@ -22,7 +24,8 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    author_name = models.CharField('Имя автора', max_length=50)
+    author_name = models.CharField('Имя автора', max_length=50, default='Имя')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     comment_text = models.CharField('Текст комментария', max_length=200)
     image = models.ImageField('Изображение', upload_to='comment_images/', blank=True, null=True)
     history = HistoricalRecords()

@@ -1,11 +1,14 @@
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Article, Comment
-
-from .serializers import ArticleSerializer, CommentSerializer
+from .pagination import CommentsPagination, ArticlesPagination
+from .serializers import CommentsSerializer, ArticlesSerializer
 
 
 def index(request):
@@ -80,10 +83,15 @@ def edit_comment(request, article_id, comment_id):
 
 
 class ArticlesViewSet(ModelViewSet):
-    serializer_class = ArticleSerializer
+    serializer_class = ArticlesSerializer
+    pagination_class = ArticlesPagination
+    permission_classes = [IsAuthenticated]
     queryset = Article.objects.all()
 
 
 class CommentsViewSet(ModelViewSet):
-    serializer_class = CommentSerializer
+    serializer_class = CommentsSerializer
+    pagination_class = CommentsPagination
     queryset = Comment.objects.all()
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+    filterset_fields = ['article']

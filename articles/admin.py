@@ -23,12 +23,12 @@ class ArticleAdmin(ExportActionMixin, admin.ModelAdmin):
 
 class CommentAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = CommentResource
-    list_display = ['article', 'author_name', 'image']
+    list_display = ['article', 'author_name', 'author', 'image']
     list_filter = ['article']
     search_fields = ["author_name"]
     fieldsets = [
         ("Статья", {"fields": ["article"]}),
-        ("Пользователь", {"fields": ["author_name", 'comment_text', 'image']}),
+        ("Пользователь", {"fields": ["author_name", 'author', 'comment_text', 'image']}),
     ]
 
 
