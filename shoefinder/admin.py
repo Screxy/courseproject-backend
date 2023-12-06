@@ -9,9 +9,18 @@ class ShoeColorsInline(admin.StackedInline):
 
 
 class ShoeModelsAdmin(admin.ModelAdmin):
-    list_display = ["name", "brand"]
+    list_display = ["name", "brand", "get_colors", "get_styles"]
     filter_horizontal = ["color", "style"]
     inlines = [ShoeColorsInline]
+
+    def get_colors(self, obj):
+        return ", ".join([color.name for color in obj.color.all()])
+
+    def get_styles(self, obj):
+        return ", ".join([style.name for style in obj.style.all()])
+
+    get_colors.short_description = "Цвета"
+    get_styles.short_description = "Стили"
 
 
 class PurchaseLinksAdmin(admin.ModelAdmin):

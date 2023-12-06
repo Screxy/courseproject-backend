@@ -2,7 +2,7 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from . import views
-from .views import BrandViewSet, PurchaseLinksViewSet, ShoeModelsViewSet
+from .views import BrandViewSet, PurchaseLinksViewSet, ShoeModelsViewSet, FindModelsViewSet
 
 app_name = 'shoefinder'
 
@@ -10,6 +10,7 @@ router = DefaultRouter()
 router.register("brands", BrandViewSet)
 router.register("models", ShoeModelsViewSet)
 router.register("links", PurchaseLinksViewSet)
+router.register('find-models', FindModelsViewSet, basename='find-models')
 
 urlpatterns = [
                   # path("", views.index, name="index"),

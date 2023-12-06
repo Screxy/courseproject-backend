@@ -1,11 +1,13 @@
 from django.http import Http404
 from django.shortcuts import render
+from rest_framework import viewsets
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import ShoeModels, PurchaseLinks, Brand, Colors, Styles
 from .pagination import ShoeModelPagination
 from .serializers import BrandSerializer, ShoeModelsSerializer, PurchaseLinksSerializer
-from .utils import find_matching_shoes
+from .utils import filter_shoe_models
 
 
 def index(request):
@@ -65,3 +67,25 @@ class ShoeModelsViewSet(ModelViewSet):
 class PurchaseLinksViewSet(ModelViewSet):
     serializer_class = PurchaseLinksSerializer
     queryset = PurchaseLinks.objects.all()
+
+
+class FindModelsViewSet(viewsets.ViewSet):
+    serializer_class = ShoeModelsSerializer
+
+    def create(self, request):
+        selected_brands = request.data.get('choiceBrands', [])
+        selected_colors = request.data.get('choiceColors', [])
+        selected_styles = request.data.get('choiceStyles', [])
+
+        shoe_models = filter_shoe_models(selected_brands, selected_colors, selected_styles)
+
+        serializer = self.serializer_class(shoe_models, many=True)
+
+        response_data = {
+            'brands': selected_brands,
+            'styles': selected_styles,
+            'colors': selected_colors,
+            'models': serializer.data
+        }
+
+        return Response(response_data)

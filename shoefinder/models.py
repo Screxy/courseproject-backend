@@ -4,7 +4,7 @@ from simple_history.models import HistoricalRecords
 
 
 class Brand(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Название бренда')
     history = HistoricalRecords()
 
     def __str__(self):
@@ -16,7 +16,7 @@ class Brand(models.Model):
 
 
 class Colors(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Цвет')
     history = HistoricalRecords()
 
     def __str__(self):
@@ -28,7 +28,7 @@ class Colors(models.Model):
 
 
 class Styles(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=255, verbose_name='Стиль')
 
     def __str__(self):
         return self.name
@@ -39,8 +39,8 @@ class Styles(models.Model):
 
 
 class ShoeModels(models.Model):
-    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    name = models.CharField(max_length=255)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE, verbose_name='Бренд')
+    name = models.CharField(max_length=255, verbose_name='Название модели')
     color = models.ManyToManyField(Colors)
     style = models.ManyToManyField(Styles)
 

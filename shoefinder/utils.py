@@ -1,18 +1,24 @@
+from functools import reduce
 from django.db.models import Q
-from .models import ShoeModels
 
-def find_matching_shoes(selected_brands, selected_colors, selected_styles):
-    query = Q()
+from shoefinder.models import ShoeModels
 
-    for brand in selected_brands:
-        query |= Q(brand__name=brand)
 
-    for color in selected_colors:
-        query &= Q(shoecolors__color__name=color)
+def filter_shoe_models(brands, styles, colors):
+    """
+    Функция для фильтрации моделей кроссовок по брендам, стилям и цветам.
 
-    for style in selected_styles:
-        query &= Q(shoestyles__style__name=style)
+    :param brands: Список брендов
+    :param styles: Список стилей
+    :param colors: Список цветов
+    :return: QuerySet моделей кроссовок
+    """
+    # Используем Q-объекты для построения сложных запросов
+    brand_q = Q(brand__name__in=brands) if brands else Q()
+    style_q = Q(style__name__in=styles) if styles else Q()
+    color_q = Q(color__name__in=colors) if colors else Q()
 
-    matching_shoes = ShoeModels.objects.filter(query).distinct()
+    # Выполняем запрос к базе данных
+    shoe_models = ShoeModels.objects.filter(brand_q & style_q & color_q)
 
-    return matching_shoes
+    return shoe_models
