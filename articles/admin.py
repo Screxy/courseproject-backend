@@ -16,7 +16,7 @@ class CommentResource(resources.ModelResource):
 
 class ArticleAdmin(ExportActionMixin, admin.ModelAdmin):
     resource_class = ArticleResource
-    list_display = ['article_title', 'pub_date']
+    list_display = ['article_title', 'author', 'pub_date']
     date_hierarchy = 'pub_date'
     readonly_fields = ['pub_date']
 

@@ -10,6 +10,7 @@ class Article(models.Model):
     article_title = models.CharField('Название статьи', max_length=200)
     article_text = models.TextField('Текст статьи')
     pub_date = models.DateTimeField('Дата публикации')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1, verbose_name='Автор')
 
     def __str__(self):
         return self.article_title
@@ -24,14 +25,14 @@ class Article(models.Model):
 
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
-    author_name = models.CharField('Имя автора', max_length=50, default='Имя')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    comment_text = models.CharField('Текст комментария', max_length=200)
-    image = models.ImageField('Изображение', upload_to='comment_images/', blank=True, null=True)
+    author_name = models.CharField(verbose_name='Имя автора', max_length=50, default='Имя')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1, verbose_name='Автор')
+    comment_text = models.CharField(verbose_name='Текст комментария', max_length=200)
+    image = models.ImageField(verbose_name='Изображение', upload_to='comment_images/', blank=True, null=True)
     history = HistoricalRecords()
 
     def __str__(self):
-        return self.author_name
+        return self.author
 
     class Meta:
         verbose_name = 'Комментарий'

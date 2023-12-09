@@ -1,11 +1,12 @@
 from django.http import Http404
 from django.shortcuts import render
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import ShoeModels, PurchaseLinks, Brand, Colors, Styles
-from .pagination import ShoeModelPagination
+from .pagination import ShoeModelPagination, PurchaseLinksPagination
 from .serializers import BrandSerializer, ShoeModelsSerializer, PurchaseLinksSerializer
 from .utils import filter_shoe_models
 
@@ -41,7 +42,7 @@ def find(request):
     selected_colors = request.POST.getlist('choiceColors')
     selected_styles = request.POST.getlist('choiceStyles')
 
-    shoe_models = find_matching_shoes(selected_brands, selected_colors, selected_styles)
+    shoe_models = filter_shoe_models(selected_brands, selected_colors, selected_styles)
 
     context = {
         'brands': selected_brands,
@@ -63,10 +64,54 @@ class ShoeModelsViewSet(ModelViewSet):
     queryset = ShoeModels.objects.all()
     pagination_class = ShoeModelPagination
 
+    def get_queryset(self):
+        brand_name = self.request.query_params.get('brand', None)
+        if brand_name:
+            return ShoeModels.objects.filter(brand__name__icontains=brand_name)
+        return ShoeModels.objects.all()
+
+    @action(detail=True, methods=['POST'])
+    def add_purchase_link(self, request, pk=None):
+        shoe_model = self.get_object()
+        data = request.data
+        data['model'] = shoe_model.id
+
+        serializer = PurchaseLinksSerializer(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=201)
+        else:
+            return Response(serializer.errors, status=400)
+
 
 class PurchaseLinksViewSet(ModelViewSet):
     serializer_class = PurchaseLinksSerializer
     queryset = PurchaseLinks.objects.all()
+    pagination_class = PurchaseLinksPagination
+
+    @action(detail=False, methods=['GET'])
+    def average_price_by_brand(self, request):
+        brand_name = request.query_params.get('brand', None)
+
+        if brand_name:
+            shoes = ShoeModels.objects.filter(brand__name=brand_name)
+            total_price = sum(link.price for link in PurchaseLinks.objects.filter(model__in=shoes))
+            average_price = total_price / len(shoes) if len(shoes) > 0 else 0
+            return Response({'average_price': average_price})
+        else:
+            return Response({'error': 'Provide a brand parameter'})
+
+    @action(detail=False, methods=['GET'])
+    def search_by_color_and_style(self, request):
+        color_name = request.query_params.get('color', None)
+        style_name = request.query_params.get('style', None)
+
+        if color_name and style_name:
+            shoes = ShoeModels.objects.filter(color__name=color_name, style__name=style_name)
+            serializer = ShoeModelsSerializer(shoes, many=True)
+            return Response(serializer.data)
+        else:
+            return Response({'error': 'Provide both color and style parameters'})
 
 
 class FindModelsViewSet(viewsets.ViewSet):
