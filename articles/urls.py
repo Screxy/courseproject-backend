@@ -6,6 +6,7 @@ app_name = 'articles'
 
 router = DefaultRouter()
 router.register("articles", views.ArticlesViewSet)
+router.register("my-articles", views.CurrentUserArticlesViewSet)
 router.register("comments", views.CommentsViewSet)
 
 urlpatterns = [

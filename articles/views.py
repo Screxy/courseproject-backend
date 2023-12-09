@@ -1,6 +1,11 @@
+import datetime
+
+from django.contrib.auth.models import AnonymousUser
+from django.db.models import Q
 from django.http import Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.permissions import IsAuthenticated
@@ -85,8 +90,19 @@ def edit_comment(request, article_id, comment_id):
 class ArticlesViewSet(ModelViewSet):
     serializer_class = ArticlesSerializer
     pagination_class = ArticlesPagination
+    queryset = Article.objects.all()
+
+
+class CurrentUserArticlesViewSet(ModelViewSet):
+    serializer_class = ArticlesSerializer
+    pagination_class = ArticlesPagination
     permission_classes = [IsAuthenticated]
     queryset = Article.objects.all()
+
+    def get_queryset(self):
+        user = self.request.user
+        return Article.objects.filter(Q(author=user) | (Q(author__username='specific_author') & Q(
+            pub_date__gte=timezone.now() - datetime.timedelta(days=7))))
 
 
 class CommentsViewSet(ModelViewSet):
@@ -95,3 +111,7 @@ class CommentsViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['article']
+
+    def get_queryset(self):
+        excluded_word = 'badword'
+        return Comment.objects.filter(~Q(comment_text__icontains=excluded_word))

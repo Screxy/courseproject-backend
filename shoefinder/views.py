@@ -1,7 +1,10 @@
 from django.http import Http404
 from django.shortcuts import render
+from django_filters import filters
+from django_filters.rest_framework import FilterSet, DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.filters import SearchFilter
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
@@ -59,10 +62,19 @@ class BrandViewSet(ModelViewSet):
     queryset = Brand.objects.all()
 
 
+class ShoeModelsFilter(FilterSet):
+    class Meta:
+        model = ShoeModels
+        fields = ['brand']
+
+
 class ShoeModelsViewSet(ModelViewSet):
     serializer_class = ShoeModelsSerializer
     queryset = ShoeModels.objects.all()
     pagination_class = ShoeModelPagination
+    filter_backends = [DjangoFilterBackend, SearchFilter]
+    filterset_class = ShoeModelsFilter
+    search_fields = ['name', 'brand__name', 'color__name']
 
     def get_queryset(self):
         brand_name = self.request.query_params.get('brand', None)
@@ -88,6 +100,8 @@ class PurchaseLinksViewSet(ModelViewSet):
     serializer_class = PurchaseLinksSerializer
     queryset = PurchaseLinks.objects.all()
     pagination_class = PurchaseLinksPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['store_name']
 
     @action(detail=False, methods=['GET'])
     def average_price_by_brand(self, request):

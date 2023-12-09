@@ -25,6 +25,7 @@ from rest_framework_simplejwt.views import (
 )
 
 urlpatterns = [
+                  path("api-auth/", include("rest_framework.urls")),
                   path('api/v1/articles/', include('articles.urls')),
                   path('api/v1/shoefinder/', include('shoefinder.urls')),
                   path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
@@ -32,4 +33,5 @@ urlpatterns = [
                   path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
                   path('admin/', admin.site.urls),
                   path("__debug__/", include("debug_toolbar.urls")),
+                  path('auth/', include('users.urls'))
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
