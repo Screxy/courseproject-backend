@@ -9,7 +9,7 @@ from django.utils import timezone
 class Article(models.Model):
     article_title = models.CharField('Название статьи', max_length=200)
     article_text = models.TextField('Текст статьи')
-    pub_date = models.DateTimeField('Дата публикации')
+    pub_date = models.DateTimeField('Дата публикации', default=datetime.datetime.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=1, verbose_name='Автор')
 
     def __str__(self):
@@ -26,7 +26,7 @@ class Article(models.Model):
 class Comment(models.Model):
     article = models.ForeignKey(Article, on_delete=models.CASCADE)
     author_name = models.CharField(verbose_name='Имя автора', max_length=50, default='Имя')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=1, verbose_name='Автор')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
     comment_text = models.CharField(verbose_name='Текст комментария', max_length=200)
     image = models.ImageField(verbose_name='Изображение', upload_to='comment_images/', blank=True, null=True)
     history = HistoricalRecords()

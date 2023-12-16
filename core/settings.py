@@ -31,8 +31,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Application definition
-
+CORS_ORIGIN_ALLOW_ALL = True
 INSTALLED_APPS = [
+    'corsheaders',
     'users.apps.UsersConfig',
     'articles.apps.ArticlesConfig',
     'shoefinder.apps.ShoefinderConfig',
@@ -50,6 +51,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -60,7 +63,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
 ]
-
+CORS_ALLOW_HEADERS = ('content-disposition', 'accept-encoding',
+                      'content-type', 'accept', 'origin', 'Authorization',
+                      'access-control-allow-methods', 'bearer')
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+]
 ROOT_URLCONF = 'core.urls'
 
 TEMPLATES = [

@@ -7,9 +7,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils import timezone
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
+from rest_framework import filters, status
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from .models import Article, Comment
 from .pagination import CommentsPagination, ArticlesPagination
@@ -108,9 +111,27 @@ class CurrentUserArticlesViewSet(ModelViewSet):
 class CommentsViewSet(ModelViewSet):
     serializer_class = CommentsSerializer
     pagination_class = CommentsPagination
+    permission_classes = [IsAuthenticated]
     queryset = Comment.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['article']
+    authentication_classes = [JWTAuthentication]  # Add JWT authentication
+
+    def create(self, request, *args, **kwargs):
+        user = self.request.user
+        comment_data = request.data
+        comment_data['author'] = user.id  # Assuming 'author' is a ForeignKey to User
+
+        serializer = self.get_serializer(data=comment_data)
+        serializer.is_valid(raise_exception=True)
+
+        self.perform_create(serializer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        self.perform_create(serializer)
+        return Response(
+            serializer.data
+        )
 
     def get_queryset(self):
         excluded_word = 'badword'
