@@ -115,23 +115,16 @@ class CommentsViewSet(ModelViewSet):
     queryset = Comment.objects.all()
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
     filterset_fields = ['article']
-    authentication_classes = [JWTAuthentication]  # Add JWT authentication
 
     def create(self, request, *args, **kwargs):
         user = self.request.user
         comment_data = request.data
-        comment_data['author'] = user.id  # Assuming 'author' is a ForeignKey to User
-
+        comment_data['author'] = user.id
         serializer = self.get_serializer(data=comment_data)
         serializer.is_valid(raise_exception=True)
+        serializer.save(author=user)
 
-        self.perform_create(serializer)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-        self.perform_create(serializer)
-        return Response(
-            serializer.data
-        )
 
     def get_queryset(self):
         excluded_word = 'badword'

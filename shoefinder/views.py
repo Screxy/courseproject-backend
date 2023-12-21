@@ -76,12 +76,6 @@ class ShoeModelsViewSet(ModelViewSet):
     filterset_class = ShoeModelsFilter
     search_fields = ['name', 'brand__name', 'color__name']
 
-    def get_queryset(self):
-        brand_name = self.request.query_params.get('brand', None)
-        if brand_name:
-            return ShoeModels.objects.filter(brand__name__icontains=brand_name)
-        return ShoeModels.objects.all()
-
     @action(detail=True, methods=['POST'])
     def add_purchase_link(self, request, pk=None):
         shoe_model = self.get_object()
