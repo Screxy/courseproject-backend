@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  backend:
+    image: screxy/courseproject/backend:dev
+    command: ["bash", "./scripts/startup.sh"]
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+
+#  nginx:
+#    image: nginx:stable-alpine3.17-slim
+#    depends_on:
+#      - backend
+#    volumes:
+#      - ./nginx:/etc/nginx/conf.d
+#    ports:
+#      - "8000:80"
+
+#  redis:
+#    image: redis:7
+#
+#  celery:
+#    image: screxy/courseproject/backend:dev
+#    command: poetry run celery -A service worker -l INFO
+#    volumes:
+#      - .:/app
+#    env_file:
+#      - .env
+#    depends_on:
+#      - backend
+#
+#  celery-beat:
+#    image: screxy/courseproject/backend:dev
+#    command: poetry run celery -A service beat
+#    volumes:
+#      - .:/app
+#    env_file:
+#      - .env
+#    depends_on:
+#      - celery
