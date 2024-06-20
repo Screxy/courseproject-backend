@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework_simplejwt.tokens import RefreshToken
 import requests
+from .task import send_email
 
 from users.models import VkUser
 from users.serializers import UserSerializer
@@ -50,11 +51,9 @@ class Oauth(ListCreateAPIView):
         email = response_date['response']['email']
         try:
             user = User.objects.get(email=email)
-            refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            refresh_token = str(refresh),
-            return HttpResponseRedirect('http://localhost:5173/oauth?access_token='
-                                        + access_token + '&refresh_token=' + refresh_token[0])
+            vk_access_token = response_date['response']['access_token']
+            user.vkuser.access_token = vk_access_token
+            user.save()
         except User.DoesNotExist:
             vk_access_token = response_date['response']['access_token']
             user_id = response_date['response']['user_id']
@@ -78,8 +77,10 @@ class Oauth(ListCreateAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             VkUser.objects.create(user=user, vk_user_id=user_id, access_token=vk_access_token)
-            refresh = RefreshToken.for_user(user)
-            access_token = str(refresh.access_token)
-            refresh_token = str(refresh),
-            return HttpResponseRedirect('http://localhost:5173/oauth?access_token='
-                                        + access_token + '&refresh_token=' + refresh_token[0])
+
+        send_email.delay(user.pk)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh),
+        return HttpResponseRedirect('http://localhost:5173/oauth?access_token='
+                                    + access_token + '&refresh_token=' + refresh_token[0])

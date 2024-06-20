@@ -1,4 +1,5 @@
 asgiref==3.7.2
+celery==5.4.0
 defusedxml==0.7.1
 diff-match-patch==20230430
 Django==4.2.6
@@ -21,6 +22,7 @@ pylint-django==2.5.5
 pylint-plugin-utils==0.8.2
 pytz==2023.3.post1
 PyYAML==6.0.1
+redis==5.0.6
 requests==2.32.3
 rest-framework-simplejwt==0.0.2
 sqlparse==0.4.4

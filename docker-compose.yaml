@@ -20,25 +20,31 @@ services:
 #    ports:
 #      - "8000:80"
 
-#  redis:
-#    image: redis:7
-#
-#  celery:
-#    image: screxy/courseproject/backend:dev
-#    command: poetry run celery -A service worker -l INFO
-#    volumes:
-#      - .:/app
-#    env_file:
-#      - .env
-#    depends_on:
-#      - backend
-#
-#  celery-beat:
-#    image: screxy/courseproject/backend:dev
-#    command: poetry run celery -A service beat
-#    volumes:
-#      - .:/app
-#    env_file:
-#      - .env
-#    depends_on:
-#      - celery
+  redis:
+    image: redis:7
+
+  celery:
+    image: screxy/courseproject/backend:dev
+    command: celery -A core worker -l INFO
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - backend
+
+  celery-beat:
+    image: screxy/courseproject/backend:dev
+    command: celery -A core beat
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - celery
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
