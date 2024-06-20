@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'simple_history',
     'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
