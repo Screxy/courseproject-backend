@@ -24,6 +24,8 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView
 )
 
+from users.views import Oauth
+
 urlpatterns = [
                   path("api-auth/", include("rest_framework.urls")),
                   path('api/v1/articles/', include('articles.urls')),
@@ -33,5 +35,6 @@ urlpatterns = [
                   path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
                   path('admin/', admin.site.urls),
                   path("__debug__/", include("debug_toolbar.urls")),
-                  path('auth/', include('users.urls'))
+                  path('auth/', include('users.urls')),
+                  path('api/oauth2/', Oauth.as_view())
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

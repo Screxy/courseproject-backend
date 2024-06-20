@@ -28,7 +28,10 @@ INTERNAL_IPS = [
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'stallion-new-infinitely.ngrok-free.app',
+    'localhost'
+]
 
 # Application definition
 CORS_ORIGIN_ALLOW_ALL = True
