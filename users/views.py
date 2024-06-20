@@ -10,7 +10,8 @@ from rest_framework.response import Response
 from rest_framework.utils import json
 from rest_framework_simplejwt.tokens import RefreshToken
 import requests
-from .task import send_email
+from core.celery import debug_task
+from .tasks import send_email_for_new_user
 
 from users.models import VkUser
 from users.serializers import UserSerializer
@@ -77,8 +78,8 @@ class Oauth(ListCreateAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             VkUser.objects.create(user=user, vk_user_id=user_id, access_token=vk_access_token)
+            send_email_for_new_user.delay(user.pk)
 
-        send_email.delay(user.pk)
         refresh = RefreshToken.for_user(user)
         access_token = str(refresh.access_token)
         refresh_token = str(refresh),
